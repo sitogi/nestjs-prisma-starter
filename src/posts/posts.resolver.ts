@@ -1,13 +1,5 @@
 import { PrismaService } from 'nestjs-prisma';
-import {
-  Resolver,
-  Query,
-  Parent,
-  Args,
-  ResolveField,
-  Subscription,
-  Mutation,
-} from '@nestjs/graphql';
+import { Args, Mutation, Parent, Query, ResolveField, Resolver, Subscription } from '@nestjs/graphql';
 import { findManyCursorConnection } from '@devoxa/prisma-relay-cursor-connection';
 import { PubSub } from 'graphql-subscriptions';
 import { UseGuards } from '@nestjs/common';
@@ -47,7 +39,7 @@ export class PostsResolver {
         authorId: user.id,
       },
     });
-    pubSub.publish('postCreated', { postCreated: newPost });
+    await pubSub.publish('postCreated', { postCreated: newPost });
     return newPost;
   }
 
@@ -63,7 +55,7 @@ export class PostsResolver {
     })
     orderBy: PostOrder
   ) {
-    const a = await findManyCursorConnection(
+    return await findManyCursorConnection(
       (args) =>
         this.prisma.post.findMany({
           include: { author: true },
@@ -83,7 +75,6 @@ export class PostsResolver {
         }),
       { first, last, before, after }
     );
-    return a;
   }
 
   @Query(() => [Post])
