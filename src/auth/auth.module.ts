@@ -28,6 +28,6 @@ import { SecurityConfig } from 'src/common/configs/config.interface';
     JwtStrategy,
     PasswordService,
   ],
-  exports: [],
+  exports: [AuthService],
 })
 export class AuthModule {}
