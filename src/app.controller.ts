@@ -3,6 +3,8 @@ import { AppService } from './app.service';
 import { AuthGuard } from '@nestjs/passport';
 import { AuthService } from 'src/auth/auth.service';
 import { LoginInput } from 'src/auth/dto/login.input';
+import { User } from '@prisma/client';
+import { AuthedUser } from 'src/users/authedUser.decorator';
 
 @Controller()
 export class AppController {
@@ -14,8 +16,8 @@ export class AppController {
 
   @UseGuards(AuthGuard('jwt'))
   @Get()
-  getHello(): string {
-    return this.appService.getHello();
+  getHello(@AuthedUser() user: User): string {
+    return `${this.appService.getHello()} ${user.lastname}`;
   }
 
   @Get('hello/:name')

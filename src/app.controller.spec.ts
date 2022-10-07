@@ -24,7 +24,16 @@ describe('AppController', () => {
 
   describe('root', () => {
     it('should return "Hello World!"', () => {
-      expect(appController.getHello()).toBe('Hello World!');
+      expect(appController.getHello({
+        id: 'test',
+        createdAt: undefined,
+        updatedAt: undefined,
+        email: 'email',
+        password: 'pass',
+        firstname: 'firstName',
+        lastname: 'lastName',
+        role: 'ADMIN',
+      })).toBe('Hello World! lastName');
     });
   });
 
