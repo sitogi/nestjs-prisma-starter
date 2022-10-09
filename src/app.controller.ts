@@ -5,15 +5,20 @@ import { AuthService } from 'src/auth/auth.service';
 import { LoginInput } from 'src/auth/dto/login.input';
 import { User } from '@prisma/client';
 import { AuthedUser } from 'src/users/authedUser.decorator';
+import { ApiHeader } from '@nestjs/swagger';
 
 @Controller()
 export class AppController {
   constructor(
     private readonly appService: AppService,
     private readonly authService: AuthService,
-              ) {
+  ) {
   }
 
+  @ApiHeader({
+    name: 'Authorization',
+    description: 'Bearer ${idToken}',
+  })
   @UseGuards(AuthGuard('jwt'))
   @Get()
   getHello(@AuthedUser() user: User): string {
