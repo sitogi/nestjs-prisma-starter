@@ -1,19 +1,19 @@
 import { Body, Controller, Get, Param, Post, UseGuards } from '@nestjs/common';
-import { AppService } from './app.service';
 import { AuthGuard } from '@nestjs/passport';
+import { ApiHeader } from '@nestjs/swagger';
+import { User } from '@prisma/client';
+
+import { AppService } from './app.service';
 import { AuthService } from 'src/auth/auth.service';
 import { LoginInput } from 'src/auth/dto/login.input';
-import { User } from '@prisma/client';
 import { AuthedUser } from 'src/users/authedUser.decorator';
-import { ApiHeader } from '@nestjs/swagger';
 
 @Controller()
 export class AppController {
   constructor(
     private readonly appService: AppService,
-    private readonly authService: AuthService,
-  ) {
-  }
+    private readonly authService: AuthService
+  ) {}
 
   @ApiHeader({
     name: 'Authorization',

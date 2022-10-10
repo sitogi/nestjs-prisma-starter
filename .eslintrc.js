@@ -8,6 +8,8 @@ module.exports = {
   extends: [
     'plugin:@typescript-eslint/recommended',
     'plugin:prettier/recommended',
+    'plugin:import/recommended',
+    'plugin:import/typescript',
     'prettier'
   ],
   root: true,
@@ -21,5 +23,23 @@ module.exports = {
     '@typescript-eslint/explicit-function-return-type': 'off',
     '@typescript-eslint/explicit-module-boundary-types': 'off',
     '@typescript-eslint/no-explicit-any': 'off',
+    'import/order': ['error', {
+      groups: ['builtin', 'external', 'parent', 'sibling', 'index', 'object', 'type'],
+      pathGroups: [{
+        pattern: '{@nestjs}',
+        group: 'builtin',
+        position: 'before'
+      }, {
+        pattern: '{src/**,\./**}',
+        group: 'parent',
+        position: 'before'
+      }],
+      pathGroupsExcludedImportTypes: ['builtin'],
+      alphabetize: {
+        order: 'asc'
+      },
+      'newlines-between': 'always'
+    }],
+    'import/no-unresolved': 'off' // REVISIT: ~/App などのパスを解析させる方法がわからなかった
   },
 };

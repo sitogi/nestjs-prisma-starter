@@ -1,8 +1,9 @@
-import { Test, TestingModule } from '@nestjs/testing';
-import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
-import { PrismaService } from 'nestjs-prisma';
+import { JwtService } from '@nestjs/jwt';
+import { Test, TestingModule } from '@nestjs/testing';
 import { Chance } from 'chance';
+import { PrismaService } from 'nestjs-prisma';
+
 import { AppController } from 'src/app.controller';
 import { AppService } from 'src/app.service';
 import { AuthService } from 'src/auth/auth.service';
@@ -16,7 +17,14 @@ describe('AppController', () => {
   beforeEach(async () => {
     const app: TestingModule = await Test.createTestingModule({
       controllers: [AppController],
-      providers: [AppService, AuthService, JwtService, PrismaService, PasswordService, ConfigService],
+      providers: [
+        AppService,
+        AuthService,
+        JwtService,
+        PrismaService,
+        PasswordService,
+        ConfigService,
+      ],
     }).compile();
 
     appController = app.get<AppController>(AppController);
@@ -24,16 +32,18 @@ describe('AppController', () => {
 
   describe('root', () => {
     it('should return "Hello World!"', () => {
-      expect(appController.getHello({
-        id: 'test',
-        createdAt: undefined,
-        updatedAt: undefined,
-        email: 'email',
-        password: 'pass',
-        firstname: 'firstName',
-        lastname: 'lastName',
-        role: 'ADMIN',
-      })).toBe('Hello World! lastName');
+      expect(
+        appController.getHello({
+          id: 'test',
+          createdAt: undefined,
+          updatedAt: undefined,
+          email: 'email',
+          password: 'pass',
+          firstname: 'firstName',
+          lastname: 'lastName',
+          role: 'ADMIN',
+        })
+      ).toBe('Hello World! lastName');
     });
   });
 

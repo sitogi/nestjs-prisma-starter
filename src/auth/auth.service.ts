@@ -1,16 +1,17 @@
-import { PrismaService } from 'nestjs-prisma';
-import { Prisma, User } from '@prisma/client';
 import {
-  Injectable,
   BadRequestException,
   ConflictException,
+  Injectable,
   UnauthorizedException,
 } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
-import { PasswordService } from './password.service';
-import { SignupInput } from './dto/signup.input';
-import { Token } from './models/token.model';
+import { Prisma, User } from '@prisma/client';
+import { PrismaService } from 'nestjs-prisma';
+
+import { SignupInput } from 'src/auth/dto/signup.input';
+import { Token } from 'src/auth/models/token.model';
+import { PasswordService } from 'src/auth/password.service';
 import { SecurityConfig } from 'src/common/configs/config.interface';
 
 @Injectable()
