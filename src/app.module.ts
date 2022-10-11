@@ -17,6 +17,9 @@ import { UsersModule } from 'src/users/users.module';
       isGlobal: true,
       prismaServiceOptions: {
         middlewares: [loggingMiddleware(new Logger('PrismaMiddleware'))], // configure your prisma middleware
+        prismaOptions: {
+          log: ['query', 'info', 'warn', 'error'], // TODO: 環境によって出し分け
+        },
       },
     }),
     AuthModule,
