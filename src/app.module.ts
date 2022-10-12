@@ -1,5 +1,6 @@
 import { Logger, Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
+import { LoggerModule } from 'nestjs-pino';
 import { PrismaModule } from 'nestjs-prisma';
 
 import { AppController } from './app.controller';
@@ -12,14 +13,12 @@ import { UsersModule } from 'src/users/users.module';
 
 @Module({
   imports: [
+    LoggerModule.forRoot(),
     ConfigModule.forRoot({ isGlobal: true, load: [config] }),
     PrismaModule.forRoot({
       isGlobal: true,
       prismaServiceOptions: {
         middlewares: [loggingMiddleware(new Logger('PrismaMiddleware'))], // configure your prisma middleware
-        prismaOptions: {
-          log: ['query', 'info', 'warn', 'error'], // TODO: 環境によって出し分け
-        },
       },
     }),
     AuthModule,

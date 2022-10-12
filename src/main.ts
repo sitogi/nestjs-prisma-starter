@@ -2,6 +2,7 @@ import { ValidationPipe } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { HttpAdapterHost, NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import { Logger } from 'nestjs-pino';
 import { PrismaClientExceptionFilter, PrismaService } from 'nestjs-prisma';
 
 import { AppModule } from './app.module';
@@ -12,7 +13,10 @@ import type {
 } from 'src/common/configs/config.interface';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create(AppModule, { bufferLogs: true });
+
+  // Logger
+  app.useLogger(app.get(Logger));
 
   // Validation
   app.useGlobalPipes(new ValidationPipe());
